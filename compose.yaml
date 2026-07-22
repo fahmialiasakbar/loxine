@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: loxine-db
+    environment:
+      POSTGRES_DB: loxine
+      POSTGRES_USER: loxine
+      POSTGRES_PASSWORD: loxine
+    ports:
+      - "5437:5432"
+    volumes:
+      - postgres_data_v2:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U loxine -d loxine"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  backend:
+    build:
+      context: ./backend
+    container_name: loxine-backend
+    command: >
+      sh -c "python manage.py wait_for_db &&
+      python manage.py migrate &&
+      python manage.py seed_super_admin &&
+      python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend/app:/app
+    environment:
+      DJANGO_SECRET_KEY: dev-secret-key
+      DJANGO_DEBUG: "True"
+      DB_NAME: loxine
+      DB_USER: loxine
+      DB_PASSWORD: loxine
+      DB_HOST: db
+      DB_PORT: 5432
+    ports:
+      - "8001:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: loxine-frontend
+    command: npm run dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8001/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data_v2:

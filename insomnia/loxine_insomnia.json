@@ -1,0 +1,223 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-04-22T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v10",
+  "resources": [
+    {
+      "_id": "wrk_loxine",
+      "_type": "workspace",
+      "name": "Loxine API",
+      "description": "Koleksi endpoint Loxine"
+    },
+    {
+      "_id": "env_loxine_base",
+      "_type": "environment",
+      "parentId": "wrk_loxine",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:8001/api",
+        "access_token": "",
+        "refresh_token": ""
+      }
+    },
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "parentId": "wrk_loxine",
+      "name": "Auth"
+    },
+    {
+      "_id": "req_register_candidate",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Register Candidate",
+      "method": "POST",
+      "url": "{{ base_url }}/auth/register/",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"fullname\": \"Budi Santoso\",\n  \"email\": \"budi@mail.com\",\n  \"password\": \"rahasia123\",\n  \"photo\": \"\",\n  \"profile\": \"Saya backend engineer\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "req_login_super_admin",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Login Super Admin",
+      "method": "POST",
+      "url": "{{ base_url }}/auth/login/",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@loxine.com\",\n  \"password\": \"12ns28112em\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "req_login_user",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Login Semua Role",
+      "method": "POST",
+      "url": "{{ base_url }}/auth/login/",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"budi@mail.com\",\n  \"password\": \"rahasia123\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "req_me",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Me",
+      "method": "GET",
+      "url": "{{ base_url }}/auth/me/",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ access_token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_refresh",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Refresh Token",
+      "method": "POST",
+      "url": "{{ base_url }}/auth/refresh/",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"refresh\": \"{{ refresh_token }}\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ]
+    },
+    {
+      "_id": "fld_company",
+      "_type": "request_group",
+      "parentId": "wrk_loxine",
+      "name": "Company"
+    },
+    {
+      "_id": "req_create_company",
+      "_type": "request",
+      "parentId": "fld_company",
+      "name": "Create Company (Super Admin)",
+      "method": "POST",
+      "url": "{{ base_url }}/companies/",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"location\": \"Jakarta\",\n  \"image\": \"https://example.com/logo.png\",\n  \"description\": \"Perusahaan teknologi finansial\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ access_token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_list_company",
+      "_type": "request",
+      "parentId": "fld_company",
+      "name": "List Company",
+      "method": "GET",
+      "url": "{{ base_url }}/companies/",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ access_token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_create_admin_company",
+      "_type": "request",
+      "parentId": "fld_company",
+      "name": "Create Admin Company (Super Admin)",
+      "method": "POST",
+      "url": "{{ base_url }}/admin-company/",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"fullname\": \"Admin PT Maju\",\n  \"email\": \"admin.company@loxine.com\",\n  \"password\": \"admin12345\",\n  \"photo\": \"\",\n  \"profile\": \"Admin perusahaan\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ access_token }}"
+        }
+      ]
+    },
+    {
+      "_id": "fld_vacancy",
+      "_type": "request_group",
+      "parentId": "wrk_loxine",
+      "name": "Vacancy"
+    },
+    {
+      "_id": "req_create_vacancy",
+      "_type": "request",
+      "parentId": "fld_vacancy",
+      "name": "Create Vacancy (Admin Company)",
+      "method": "POST",
+      "url": "{{ base_url }}/vacancies/",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"company\": 1,\n  \"title\": \"Backend Engineer\",\n  \"description\": \"Mengelola API dan database\",\n  \"location\": \"Bandung\"\n}"
+      },
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ access_token }}"
+        }
+      ]
+    },
+    {
+      "_id": "req_list_vacancy",
+      "_type": "request",
+      "parentId": "fld_vacancy",
+      "name": "List Vacancy (Candidate/Admin)",
+      "method": "GET",
+      "url": "{{ base_url }}/vacancies/",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ access_token }}"
+        }
+      ]
+    }
+  ]
+}
