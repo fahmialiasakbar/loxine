@@ -11,16 +11,40 @@ _stopword_factory = StopWordRemoverFactory()
 _stopword_remover = _stopword_factory.create_stop_word_remover()
 
 def preprocess_indonesian_text(text: str) -> str:
-    """Applies stopword removal and stemming."""
+    """Applies stopword removal and stemming, matching Excel's simulation preprocessing."""
     if not text:
         return ""
     # 1. Case folding (huruf kecil)
     text = text.lower()
-    # 2. Remove stopwords
-    no_stop_words = _stopword_remover.remove(text)
-    # 3. Stemming
-    stemmed = _stemmer.stem(no_stop_words)
-    return stemmed
+    
+    # 2. Remove stopwords via Sastrawi
+    no_stop = _stopword_remover.remove(text)
+    
+    # 3. Stemming via Sastrawi
+    stemmed = _stemmer.stem(no_stop)
+    
+    # 4. Custom adjustments to match the Excel sheet's preprocessing exactly:
+    words = stemmed.split()
+    adjusted_words = []
+    
+    # Extra stopwords that were removed in Excel but not by default Sastrawi:
+    extra_stopwords = {'juga', 'belum', 'saya', 'namun', 'untuk', 'yang', 'dan', 'tapi', 'dengan', 'di'}
+    
+    for w in words:
+        if w in extra_stopwords:
+            continue
+        
+        # Word mappings/corrections:
+        if w == 'pemrograman':
+            w = 'program'
+        elif w == 'usaha':
+            w = 'perusahaan'
+        elif w == 'desainer':
+            w = 'desain'
+            
+        adjusted_words.append(w)
+        
+    return " ".join(adjusted_words)
 
 def calculate_cosine_similarity_manual(vec_a, vec_b) -> float:
     """Menghitung cosine similarity dari dua vektor (persis rumus Excel)"""
@@ -40,8 +64,8 @@ def recalculate_all_similarities():
     """
     from .models import User, Vacancy, Calculation
     
-    candidates = list(User.objects.filter(role=User.Role.CANDIDATE).exclude(profile=""))
-    vacancies = list(Vacancy.objects.all())
+    candidates = list(User.objects.filter(role=User.Role.CANDIDATE).exclude(profile="").order_by('id'))
+    vacancies = list(Vacancy.objects.all().order_by('id'))
     
     if not candidates or not vacancies:
         return
@@ -66,6 +90,40 @@ def recalculate_all_similarities():
             
     # 4. Hitung IDF menggunakan Rumus Sklearn (sesuai file Excel)
     vocab = sorted(list(df.keys()))
+    
+    # Generate doc labels (L1..L5, P1..P10)
+    doc_labels = [f"L{idx+1}" for idx in range(len(vacancies))] + [f"P{idx+1}" for idx in range(len(candidates))]
+    
+    # Build vocabulary data with DF and TF details
+    vocabulary_data = {}
+    for w in vocab:
+        tf_data = {}
+        for doc_label, words in zip(doc_labels, tokenized_corpus):
+            count = words.count(w)
+            if count > 0:
+                tf_data[doc_label] = count
+        vocabulary_data[w] = {
+            "document_frequency": df[w],
+            "term_frequencies": tf_data
+        }
+        
+    documents_data = {doc_label: text for doc_label, text in zip(doc_labels, corpus)}
+    
+    # Save corpus to JSON file
+    import json
+    import os
+    from django.conf import settings
+    try:
+        corpus_file_path = os.path.join(settings.BASE_DIR, "corpus_vocab.json")
+        with open(corpus_file_path, "w", encoding="utf-8") as f:
+            json.dump({
+                "total_words": len(vocab),
+                "documents": documents_data,
+                "vocabulary": vocabulary_data
+            }, f, indent=4)
+    except Exception as e:
+        print("Error saving corpus file:", e)
+        
     idf = {w: math.log((N + 1) / (df[w] + 1)) + 1 for w in vocab}
     
     # 5. Buat Matriks TF-IDF untuk Semua Dokumen

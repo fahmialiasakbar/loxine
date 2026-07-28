@@ -9,9 +9,10 @@ export default function CandidateVacancyDetailPage() {
   const params = useParams()
   const vacancyId = params.id
   const [vacancy, setVacancy] = useState(null)
-  const [applicationStatus, setApplicationStatus] = useState("none")
+  const [calc, setCalc] = useState(null)
   const [loading, setLoading] = useState(true)
   const [applying, setApplying] = useState(false)
+  const [actionLoading, setActionLoading] = useState("")
   const [message, setMessage] = useState({ type: "", text: "" })
 
   useEffect(() => {
@@ -23,10 +24,10 @@ export default function CandidateVacancyDetailPage() {
         ])
         setVacancy(vacData)
 
-        // Check application status
+        // Check calculation
         const myCalc = calcsData.find((c) => c.vacancy === Number(vacancyId))
         if (myCalc) {
-          setApplicationStatus(myCalc.application_status)
+          setCalc(myCalc)
         }
       } catch (err) {
         console.error(err)
@@ -41,13 +42,34 @@ export default function CandidateVacancyDetailPage() {
     setApplying(true)
     setMessage({ type: "", text: "" })
     try {
-      await apiPost(`/vacancies/${vacancyId}/apply/`, {})
-      setApplicationStatus("pending")
+      const data = await apiPost(`/vacancies/${vacancyId}/apply/`, {})
+      setCalc(data)
       setMessage({ type: "success", text: "Berhasil melamar! Profil Anda sedang diproses." })
     } catch (err) {
       setMessage({ type: "danger", text: err.message })
     } finally {
       setApplying(false)
+    }
+  }
+
+  const handleRespondOffer = async (newStatus) => {
+    setActionLoading(newStatus)
+    setMessage({ type: "", text: "" })
+    try {
+      const data = await apiPatch(`/calculations/${calc.id}/`, {
+        application_status: newStatus,
+      })
+      setCalc(data)
+      setMessage({
+        type: newStatus === "pending" ? "success" : "warning",
+        text: newStatus === "pending" 
+          ? "Berhasil menerima tawaran! Perusahaan akan segera menghubungi Anda." 
+          : "Tawaran telah ditolak.",
+      })
+    } catch (err) {
+      setMessage({ type: "danger", text: err.message })
+    } finally {
+      setActionLoading("")
     }
   }
 
@@ -103,35 +125,78 @@ export default function CandidateVacancyDetailPage() {
             </p>
           </div>
 
-          {/* Apply button */}
+          {/* Apply button and Offer Actions */}
           <div className="text-center">
-            {applicationStatus === "rejected" ? (
-              <div className="alert alert-danger mb-0 text-center" style={{ fontWeight: 500 }}>
-                <i className="bi bi-x-circle me-1"></i> Mohon maaf, lamaran Anda belum dapat dilanjutkan untuk saat ini.
-              </div>
-            ) : applicationStatus === "accepted" ? (
-              <div className="alert alert-success mb-0 text-center" style={{ fontWeight: 500 }}>
-                <i className="bi bi-check-circle me-1"></i> Selamat! Anda terpilih ke tahap selanjutnya. Silakan cek email Anda.
-              </div>
-            ) : applicationStatus === "pending" ? (
-              <button className="btn btn-outline-primary w-100" disabled>
-                <i className="bi bi-clock me-1"></i> Lamaran Sedang Diproses
-              </button>
+            {calc && calc.is_offered ? (
+              // Case: Offered by company
+              calc.application_status === "none" ? (
+                <div className="card border-primary p-3 mb-0" style={{ background: "rgba(37, 99, 235, 0.03)" }}>
+                  <h6 style={{ fontWeight: 700, color: "var(--primary)" }} className="mb-2">
+                    <i className="bi bi-gift me-2"></i> Anda Mendapat Tawaran!
+                  </h6>
+                  <p className="text-secondary small mb-3">
+                    Perusahaan ini tertarik dengan profil Anda dan menawarkan posisi ini. Apakah Anda ingin menerima tawaran ini?
+                  </p>
+                  <div className="d-flex justify-content-center gap-2">
+                    <button
+                      className="btn btn-success btn-sm px-4"
+                      onClick={() => handleRespondOffer("pending")}
+                      disabled={!!actionLoading}
+                    >
+                      {actionLoading === "pending" ? "Memproses..." : <><i className="bi bi-check2 me-1"></i> Terima Tawaran</>}
+                    </button>
+                    <button
+                      className="btn btn-outline-danger btn-sm px-4"
+                      onClick={() => handleRespondOffer("rejected")}
+                      disabled={!!actionLoading}
+                    >
+                      {actionLoading === "rejected" ? "Memproses..." : <><i className="bi bi-x me-1"></i> Tolak</>}
+                    </button>
+                  </div>
+                </div>
+              ) : calc.application_status === "pending" ? (
+                <div className="alert alert-info mb-0 text-center" style={{ fontWeight: 500 }}>
+                  <i className="bi bi-clock-history me-1"></i> Anda telah menerima tawaran ini. Menunggu kabar selanjutnya dari perusahaan.
+                </div>
+              ) : calc.application_status === "rejected" ? (
+                <div className="alert alert-secondary mb-0 text-center" style={{ fontWeight: 500 }}>
+                  <i className="bi bi-x-circle me-1"></i> Anda telah menolak tawaran ini.
+                </div>
+              ) : calc.application_status === "accepted" ? (
+                <div className="alert alert-success mb-0 text-center" style={{ fontWeight: 500 }}>
+                  <i className="bi bi-check-circle-fill me-1"></i> Selamat! Anda terpilih ke tahap selanjutnya untuk tawaran ini. Silakan cek email Anda.
+                </div>
+              ) : null
             ) : (
-              <button
-                className="btn btn-primary w-100"
-                onClick={handleApply}
-                disabled={applying}
-              >
-                {applying ? (
-                  <span className="d-flex align-items-center justify-content-center gap-2">
-                    <span className="spinner-border spinner-border-sm" />
-                    Mengirim lamaran...
-                  </span>
-                ) : (
-                  <><i className="bi bi-send me-1"></i> Lamar Sekarang</>
-                )}
-              </button>
+              // Case: Normal job application (candidate applying on their own)
+              (!calc || calc.application_status === "none") ? (
+                <button
+                  className="btn btn-primary w-100"
+                  onClick={handleApply}
+                  disabled={applying}
+                >
+                  {applying ? (
+                    <span className="d-flex align-items-center justify-content-center gap-2">
+                      <span className="spinner-border spinner-border-sm" />
+                      Mengirim lamaran...
+                    </span>
+                  ) : (
+                    <><i className="bi bi-send me-1"></i> Lamar Sekarang</>
+                  )}
+                </button>
+              ) : calc.application_status === "pending" ? (
+                <button className="btn btn-outline-primary w-100" disabled>
+                  <i className="bi bi-clock me-1"></i> Lamaran Sedang Diproses
+                </button>
+              ) : calc.application_status === "rejected" ? (
+                <div className="alert alert-danger mb-0 text-center" style={{ fontWeight: 500 }}>
+                  <i className="bi bi-x-circle me-1"></i> Mohon maaf, lamaran Anda belum dapat dilanjutkan untuk saat ini.
+                </div>
+              ) : calc.application_status === "accepted" ? (
+                <div className="alert alert-success mb-0 text-center" style={{ fontWeight: 500 }}>
+                  <i className="bi bi-check-circle me-1"></i> Selamat! Anda terpilih ke tahap selanjutnya. Silakan cek email Anda.
+                </div>
+              ) : null
             )}
           </div>
         </div>

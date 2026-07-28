@@ -72,6 +72,8 @@ class CalculationSerializer(serializers.ModelSerializer):
     vacancy_title = serializers.CharField(source="vacancy.title", read_only=True)
     vacancy_location = serializers.CharField(source="vacancy.location", read_only=True)
     vacancy_description = serializers.CharField(source="vacancy.description", read_only=True)
+    company_name = serializers.CharField(source="vacancy.company.name", read_only=True)
+    company_image = serializers.CharField(source="vacancy.company.image", read_only=True)
 
     class Meta:
         model = Calculation
@@ -86,6 +88,8 @@ class CalculationSerializer(serializers.ModelSerializer):
             "vacancy_title",
             "vacancy_location",
             "vacancy_description",
+            "company_name",
+            "company_image",
             "percentage",
             "is_offered",
             "application_status",

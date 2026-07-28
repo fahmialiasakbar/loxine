@@ -1,0 +1,659 @@
+{
+    "total_words": 90,
+    "documents": {
+        "L1": "cari web developer kuasa program php framework laravel database mysql buat rest api",
+        "L2": "perusahaan butuh data scientist ahli python sql algoritma machine learning analisis statistik data",
+        "L3": "cari ui ux designer buat prototyping wireframing riset guna mahir guna figma",
+        "L4": "butuh graphic designer kreatif kuasa adobe photoshop illustrator desain kreatif branding",
+        "L5": "cari akuntan pajak alam kelola lapor uang rekonsiliasi bank pajak perusahaan microsoft excel",
+        "P1": "web developer alam guna php framework laravel database mysql biasa buat rest api",
+        "P2": "fullstack developer kuasa program php mysql guna adobe photoshop desain banner web",
+        "P3": "lulus statistika fokus data scientist mahir python sql model machine learning analisis data",
+        "P4": "data analyst biasa laku query sql database mysql sedikit paham python ajar machine learning",
+        "P5": "ui ux designer spesialis produk digital sangat mahir guna figma wireframing prototyping riset guna",
+        "P6": "desain serbabisa kuasa figma desain ui biasa guna adobe illustrator buat aset grafis",
+        "P7": "graphic designer kreatif portofolio luas bidang branding mahir guna adobe photoshop illustrator",
+        "P8": "akuntan senior ahli susun lapor uang perusahaan audit internal manajemen pajak tingkat lanjut microsoft excel",
+        "P9": "finance staff biasa kelola uang rekonsiliasi bank mahir guna microsoft excel paham pajak",
+        "P10": "lulus baru administrasi kantor kuasa microsoft excel input data logistik punya alam akuntansi"
+    },
+    "vocabulary": {
+        "administrasi": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P10": 1
+            }
+        },
+        "adobe": {
+            "document_frequency": 4,
+            "term_frequencies": {
+                "L4": 1,
+                "P2": 1,
+                "P6": 1,
+                "P7": 1
+            }
+        },
+        "ahli": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L2": 1,
+                "P8": 1
+            }
+        },
+        "ajar": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P4": 1
+            }
+        },
+        "akuntan": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L5": 1,
+                "P8": 1
+            }
+        },
+        "akuntansi": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P10": 1
+            }
+        },
+        "alam": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L5": 1,
+                "P1": 1,
+                "P10": 1
+            }
+        },
+        "algoritma": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "L2": 1
+            }
+        },
+        "analisis": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L2": 1,
+                "P3": 1
+            }
+        },
+        "analyst": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P4": 1
+            }
+        },
+        "api": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L1": 1,
+                "P1": 1
+            }
+        },
+        "aset": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P6": 1
+            }
+        },
+        "audit": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P8": 1
+            }
+        },
+        "bank": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L5": 1,
+                "P9": 1
+            }
+        },
+        "banner": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P2": 1
+            }
+        },
+        "baru": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P10": 1
+            }
+        },
+        "biasa": {
+            "document_frequency": 4,
+            "term_frequencies": {
+                "P1": 1,
+                "P4": 1,
+                "P6": 1,
+                "P9": 1
+            }
+        },
+        "bidang": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P7": 1
+            }
+        },
+        "branding": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L4": 1,
+                "P7": 1
+            }
+        },
+        "buat": {
+            "document_frequency": 4,
+            "term_frequencies": {
+                "L1": 1,
+                "L3": 1,
+                "P1": 1,
+                "P6": 1
+            }
+        },
+        "butuh": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L2": 1,
+                "L4": 1
+            }
+        },
+        "cari": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L1": 1,
+                "L3": 1,
+                "L5": 1
+            }
+        },
+        "data": {
+            "document_frequency": 4,
+            "term_frequencies": {
+                "L2": 2,
+                "P3": 2,
+                "P4": 1,
+                "P10": 1
+            }
+        },
+        "database": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L1": 1,
+                "P1": 1,
+                "P4": 1
+            }
+        },
+        "desain": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L4": 1,
+                "P2": 1,
+                "P6": 2
+            }
+        },
+        "designer": {
+            "document_frequency": 4,
+            "term_frequencies": {
+                "L3": 1,
+                "L4": 1,
+                "P5": 1,
+                "P7": 1
+            }
+        },
+        "developer": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L1": 1,
+                "P1": 1,
+                "P2": 1
+            }
+        },
+        "digital": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P5": 1
+            }
+        },
+        "excel": {
+            "document_frequency": 4,
+            "term_frequencies": {
+                "L5": 1,
+                "P8": 1,
+                "P9": 1,
+                "P10": 1
+            }
+        },
+        "figma": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L3": 1,
+                "P5": 1,
+                "P6": 1
+            }
+        },
+        "finance": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P9": 1
+            }
+        },
+        "fokus": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P3": 1
+            }
+        },
+        "framework": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L1": 1,
+                "P1": 1
+            }
+        },
+        "fullstack": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P2": 1
+            }
+        },
+        "grafis": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P6": 1
+            }
+        },
+        "graphic": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L4": 1,
+                "P7": 1
+            }
+        },
+        "guna": {
+            "document_frequency": 7,
+            "term_frequencies": {
+                "L3": 2,
+                "P1": 1,
+                "P2": 1,
+                "P5": 2,
+                "P6": 1,
+                "P7": 1,
+                "P9": 1
+            }
+        },
+        "illustrator": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L4": 1,
+                "P6": 1,
+                "P7": 1
+            }
+        },
+        "input": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P10": 1
+            }
+        },
+        "internal": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P8": 1
+            }
+        },
+        "kantor": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P10": 1
+            }
+        },
+        "kelola": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L5": 1,
+                "P9": 1
+            }
+        },
+        "kreatif": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L4": 2,
+                "P7": 1
+            }
+        },
+        "kuasa": {
+            "document_frequency": 5,
+            "term_frequencies": {
+                "L1": 1,
+                "L4": 1,
+                "P2": 1,
+                "P6": 1,
+                "P10": 1
+            }
+        },
+        "laku": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P4": 1
+            }
+        },
+        "lanjut": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P8": 1
+            }
+        },
+        "lapor": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L5": 1,
+                "P8": 1
+            }
+        },
+        "laravel": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L1": 1,
+                "P1": 1
+            }
+        },
+        "learning": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L2": 1,
+                "P3": 1,
+                "P4": 1
+            }
+        },
+        "logistik": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P10": 1
+            }
+        },
+        "luas": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P7": 1
+            }
+        },
+        "lulus": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "P3": 1,
+                "P10": 1
+            }
+        },
+        "machine": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L2": 1,
+                "P3": 1,
+                "P4": 1
+            }
+        },
+        "mahir": {
+            "document_frequency": 5,
+            "term_frequencies": {
+                "L3": 1,
+                "P3": 1,
+                "P5": 1,
+                "P7": 1,
+                "P9": 1
+            }
+        },
+        "manajemen": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P8": 1
+            }
+        },
+        "microsoft": {
+            "document_frequency": 4,
+            "term_frequencies": {
+                "L5": 1,
+                "P8": 1,
+                "P9": 1,
+                "P10": 1
+            }
+        },
+        "model": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P3": 1
+            }
+        },
+        "mysql": {
+            "document_frequency": 4,
+            "term_frequencies": {
+                "L1": 1,
+                "P1": 1,
+                "P2": 1,
+                "P4": 1
+            }
+        },
+        "paham": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "P4": 1,
+                "P9": 1
+            }
+        },
+        "pajak": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L5": 2,
+                "P8": 1,
+                "P9": 1
+            }
+        },
+        "perusahaan": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L2": 1,
+                "L5": 1,
+                "P8": 1
+            }
+        },
+        "photoshop": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L4": 1,
+                "P2": 1,
+                "P7": 1
+            }
+        },
+        "php": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L1": 1,
+                "P1": 1,
+                "P2": 1
+            }
+        },
+        "portofolio": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P7": 1
+            }
+        },
+        "produk": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P5": 1
+            }
+        },
+        "program": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L1": 1,
+                "P2": 1
+            }
+        },
+        "prototyping": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L3": 1,
+                "P5": 1
+            }
+        },
+        "punya": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P10": 1
+            }
+        },
+        "python": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L2": 1,
+                "P3": 1,
+                "P4": 1
+            }
+        },
+        "query": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P4": 1
+            }
+        },
+        "rekonsiliasi": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L5": 1,
+                "P9": 1
+            }
+        },
+        "rest": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L1": 1,
+                "P1": 1
+            }
+        },
+        "riset": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L3": 1,
+                "P5": 1
+            }
+        },
+        "sangat": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P5": 1
+            }
+        },
+        "scientist": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L2": 1,
+                "P3": 1
+            }
+        },
+        "sedikit": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P4": 1
+            }
+        },
+        "senior": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P8": 1
+            }
+        },
+        "serbabisa": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P6": 1
+            }
+        },
+        "spesialis": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P5": 1
+            }
+        },
+        "sql": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L2": 1,
+                "P3": 1,
+                "P4": 1
+            }
+        },
+        "staff": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P9": 1
+            }
+        },
+        "statistik": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "L2": 1
+            }
+        },
+        "statistika": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P3": 1
+            }
+        },
+        "susun": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P8": 1
+            }
+        },
+        "tingkat": {
+            "document_frequency": 1,
+            "term_frequencies": {
+                "P8": 1
+            }
+        },
+        "uang": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L5": 1,
+                "P8": 1,
+                "P9": 1
+            }
+        },
+        "ui": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L3": 1,
+                "P5": 1,
+                "P6": 1
+            }
+        },
+        "ux": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L3": 1,
+                "P5": 1
+            }
+        },
+        "web": {
+            "document_frequency": 3,
+            "term_frequencies": {
+                "L1": 1,
+                "P1": 1,
+                "P2": 1
+            }
+        },
+        "wireframing": {
+            "document_frequency": 2,
+            "term_frequencies": {
+                "L3": 1,
+                "P5": 1
+            }
+        }
+    }
+}

@@ -75,7 +75,7 @@ function getNavItems(role) {
       { href: "/admin/companies", label: "Perusahaan", icon: <i className="bi bi-building"></i> },
       { href: "/admin/candidates", label: "Kandidat", icon: <i className="bi bi-people"></i> },
       { href: "/admin/vacancies", label: "Lowongan", icon: <i className="bi bi-card-list"></i> },
-      { href: "/admin/calculations", label: "Kalkulasi", icon: <i className="bi bi-bar-chart-line"></i> },
+      // { href: "/admin/calculations", label: "Kalkulasi", icon: <i className="bi bi-bar-chart-line"></i> },
     ]
   }
   if (role === "admin_company") {
