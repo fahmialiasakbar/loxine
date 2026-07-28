@@ -44,7 +44,7 @@ export default function CandidateVacancyDetailPage() {
     try {
       const data = await apiPost(`/vacancies/${vacancyId}/apply/`, {})
       setCalc(data)
-      setMessage({ type: "success", text: "Berhasil melamar! Profil Anda sedang diproses." })
+      setMessage({ type: "success", text: "Berhasil melamar! Status Anda: Telah Melamar." })
     } catch (err) {
       setMessage({ type: "danger", text: err.message })
     } finally {
@@ -185,8 +185,8 @@ export default function CandidateVacancyDetailPage() {
                   )}
                 </button>
               ) : calc.application_status === "pending" ? (
-                <button className="btn btn-outline-primary w-100" disabled>
-                  <i className="bi bi-clock me-1"></i> Lamaran Sedang Diproses
+                <button className="btn btn-outline-success w-100" disabled>
+                  <i className="bi bi-check2-all me-1"></i> Telah Melamar
                 </button>
               ) : calc.application_status === "rejected" ? (
                 <div className="alert alert-danger mb-0 text-center" style={{ fontWeight: 500 }}>

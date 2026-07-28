@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { apiGet, apiPatch } from "../../lib/api"
+import { apiGet, apiPatch, apiPost } from "../../lib/api"
 
 export default function CandidateVacanciesPage() {
   const [vacancies, setVacancies] = useState([])
@@ -24,6 +24,9 @@ export default function CandidateVacanciesPage() {
           return {
             ...v,
             percentage: calc ? parseFloat(calc.percentage) : 0,
+            application_status: calc ? calc.application_status : "none",
+            is_offered: calc ? calc.is_offered : false,
+            calc_id: calc ? calc.id : null,
           }
         })
         vacanciesWithPercentage.sort((a, b) => b.percentage - a.percentage)
@@ -40,6 +43,29 @@ export default function CandidateVacanciesPage() {
     }
     fetchData()
   }, [])
+
+  const handleApplyDirect = async (vacancyId) => {
+    try {
+      const data = await apiPost(`/vacancies/${vacancyId}/apply/`, {})
+      
+      // Update vacancies list state
+      setVacancies((prev) =>
+        prev.map((v) =>
+          v.id === vacancyId
+            ? {
+                ...v,
+                application_status: data.application_status,
+                calc_id: data.id,
+              }
+            : v
+        )
+      )
+      alert("Berhasil melamar lowongan!")
+    } catch (err) {
+      console.error(err)
+      alert("Gagal melamar lowongan: " + err.message)
+    }
+  }
 
   const handleRespondOffer = async (calcId, newStatus) => {
     try {
@@ -141,10 +167,34 @@ export default function CandidateVacanciesPage() {
                           <span className="badge bg-primary text-white" style={{ fontSize: "0.7rem", fontWeight: 600 }}>
                             Kecocokan: {Math.round(v.percentage)}%
                           </span>
+                          {v.application_status !== "none" && !v.is_offered && (
+                            <span className={`badge ${
+                              v.application_status === "pending" ? "bg-info text-white" :
+                              v.application_status === "accepted" ? "bg-success text-white" :
+                              "bg-secondary text-white"
+                            }`} style={{ fontSize: "0.7rem", fontWeight: 600 }}>
+                              {v.application_status === "pending" ? "Telah Melamar" : 
+                               v.application_status === "accepted" ? "Diterima" : "Ditolak"}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
-                    <div className="mt-auto pt-2 text-end">
+                    <div className="mt-auto pt-2 text-end d-flex gap-2 justify-content-end align-items-center">
+                      {v.application_status === "none" ? (
+                        <button
+                          onClick={() => handleApplyDirect(v.id)}
+                          className="btn btn-outline-primary btn-sm"
+                        >
+                          Lamar
+                        </button>
+                      ) : (
+                        v.application_status === "pending" && (
+                          <span className="text-secondary small" style={{ fontSize: "0.8rem", fontWeight: 500 }}>
+                            <i className="bi bi-check-circle-fill text-success me-1"></i> Telah Melamar
+                          </span>
+                        )
+                      )}
                       <Link href={`/candidate/vacancies/${v.id}`} className="btn btn-primary btn-sm">
                         Lihat Detail
                       </Link>
